@@ -11,7 +11,7 @@ body {
 }
 
 section {
-    scroll-margin-top: 70px;
+    scroll-margin-top: 50px;
 }
 
 h1,
@@ -27,7 +27,7 @@ a {
 }
 
 
-/* Navbar */
+/* Navbar Section */
 
 .navbar {
     position: sticky;
@@ -111,10 +111,6 @@ a {
 
 
 /* Hero Countdown */
-
-/* =========================
-   Countdown
-========================= */
 
 .countdown-box {
     background: rgba(255, 255, 255, 0.8);
@@ -321,6 +317,31 @@ a {
 #traditions .card-text {
     color: #666;
     line-height: 1.6;
+}
+
+
+/* Greeting Section */
+
+#greeting {
+    background: linear-gradient(
+        135deg,
+        #fff8e7,
+        #f0fdf4
+    );
+}
+
+#greeting h2 {
+    color: #198754;
+}
+
+#greeting .card {
+    border-radius: 20px;
+}
+
+#greetingMessage {
+    color: #198754;
+    font-weight: 600;
+    line-height: 1.7;
 }
 
 

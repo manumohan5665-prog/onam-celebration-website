@@ -55,6 +55,12 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="#greeting">
+                            Greeting
+                        </a>
+                    </li>
+
                 </ul>
 
             </div>
@@ -174,7 +180,48 @@
 
             </div>
 
-            <!-- Days -->
+            <!-- Onam Days -->
+            <div class="row justify-content-center mb-4">
+
+                <div class="col-md-8 col-lg-6">
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            🔍
+                        </span>
+
+                        <input type="text" id="onamSearch" class="form-control" placeholder="Search Onam day...">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+
+                <button class="btn btn-success filter-btn active" data-filter="all">
+                    All Days
+                </button>
+
+                <button class="btn btn-outline-success filter-btn" data-filter="early">
+                    Days 1–5
+                </button>
+
+                <button class="btn btn-outline-success filter-btn" data-filter="final">
+                    Days 6–10
+                </button>
+
+            </div>
+
+            <p id="onamResultCount" class="text-center text-muted mb-4">
+                Showing 10 of 10 Onam days
+            </p>
+
+            <div class="row g-4" id="onamDaysContainer">
+            </div>
+
             <div class="row g-4" id="onamDaysContainer"></div>
 
         </div>
@@ -472,6 +519,52 @@
                                 A graceful traditional dance performed
                                 during festive celebrations.
                             </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Greeting Section -->
+    <section id="greeting" class="py-5">
+
+        <div class="container">
+
+            <div class="text-center">
+
+                <h2 class="fw-bold">
+                    🌼 Send an Onam Greeting
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Create a personalized Onam message.
+                </p>
+
+                <div class="row justify-content-center">
+
+                    <div class="col-md-6 col-lg-5">
+
+                        <div class="card border-0 shadow-sm p-4">
+
+                            <label for="visitorName" class="form-label fw-semibold">
+                                Enter your name
+                            </label>
+
+                            <input type="text" id="visitorName" class="form-control mb-3" placeholder="Your name">
+
+                            <button id="greetingBtn" class="btn btn-success">
+                                Generate Greeting
+                            </button>
+
+                            <div id="greetingMessage" class="mt-4">
+                            </div>
 
                         </div>
 

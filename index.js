@@ -34,6 +34,7 @@ updateCountdown();
 
 setInterval(updateCountdown, 1000);
 
+
 // Pookalam Section
 
 const pookalamContainer = document.getElementById("pookalamContainer");
@@ -86,6 +87,7 @@ pookalams.forEach((pookalam) => {
 
   pookalamContainer.appendChild(column);
 });
+
 
 // Onam Days Section
 const onamDaysContainer = document.getElementById("onamDaysContainer");
@@ -162,34 +164,206 @@ const onamDays = [
   },
 ];
 
-onamDays.forEach((onamDay) => {
-  const column = document.createElement("div");
 
-  column.className = "col-md-6 col-lg-4";
+// Onam Days Display Section
 
-  const badgeClass = onamDay.day === 10 ? "text-bg-warning" : "text-bg-success";
+function displayOnamDays(days) {
+  onamDaysContainer.innerHTML = "";
 
-  column.innerHTML = `
-        <div class="card h-100 shadow-sm">
+  const onamResultCount = document.getElementById("onamResultCount");
+  onamResultCount.textContent = `Showing ${days.length} of ${onamDays.length} Onam days`;
 
-            <div class="card-body text-center">
+  if (days.length === 0) {
+    onamDaysContainer.innerHTML = `
+            <div class="col-12 text-center py-4">
 
-                <span class="badge ${badgeClass} mb-3">
-                    Day ${onamDay.day}
-                </span>
+                <h5 class="text-muted">
+                    No Onam days found.
+                </h5>
 
-                <h4 class="card-title">
-                    ${onamDay.name}
-                </h4>
-
-                <p class="card-text">
-                    ${onamDay.description}
+                <p class="text-muted">
+                    Try searching for another day.
                 </p>
 
             </div>
+        `;
 
-        </div>`;
+    return;
+  }
 
-  onamDaysContainer.appendChild(column);
+  days.forEach(function (onamDay) {
+    const column = document.createElement("div");
 
+    column.className = "col-md-6 col-lg-4";
+
+    const badgeClass =
+      onamDay.day === 10 ? "text-bg-warning" : "text-bg-success";
+
+    column.innerHTML = `
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <span class="badge ${badgeClass} mb-3">
+                        Day ${onamDay.day}
+                    </span>
+
+                    <h4 class="card-title">
+                        ${onamDay.name}
+                    </h4>
+
+                    <p class="card-text">
+                        ${onamDay.description}
+                    </p>
+
+                </div>
+
+            </div>
+        `;
+
+    onamDaysContainer.appendChild(column);
+  });
+}
+displayOnamDays(onamDays);
+
+
+// Filter Button Section
+
+let currentFilter = "all";
+const filterButtons = document.querySelectorAll(".filter-btn");
+const onamSearch = document.getElementById("onamSearch");
+
+function applyFilters() {
+  const searchText = onamSearch.value.toLowerCase().trim();
+
+  let filteredDays = onamDays;
+
+  // Apply day filter
+  if (currentFilter === "early") {
+    filteredDays = filteredDays.filter(function (onamDay) {
+      return onamDay.day <= 5;
+    });
+  } else if (currentFilter === "final") {
+    filteredDays = filteredDays.filter(function (onamDay) {
+      return onamDay.day >= 6;
+    });
+  }
+
+  // Apply search filter
+  if (searchText !== "") {
+    filteredDays = filteredDays.filter(function (onamDay) {
+      return (
+        onamDay.name.toLowerCase().includes(searchText) ||
+        onamDay.description.toLowerCase().includes(searchText)
+      );
+    });
+  }
+
+  displayOnamDays(filteredDays);
+}
+
+filterButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    currentFilter = button.dataset.filter;
+
+    applyFilters();
+
+    filterButtons.forEach(function (btn) {
+      btn.classList.remove("active");
+      btn.classList.remove("btn-success");
+      btn.classList.add("btn-outline-success");
+    });
+
+    button.classList.add("active");
+    button.classList.remove("btn-outline-success");
+    button.classList.add("btn-success");
+  });
+});
+
+
+// Onam Days Search Section
+
+onamSearch.addEventListener("input", function () {
+  applyFilters();
+});
+
+
+// Greeting Section
+
+const visitorName = document.getElementById("visitorName");
+
+const greetingBtn = document.getElementById("greetingBtn");
+
+const greetingMessage = document.getElementById("greetingMessage");
+
+greetingBtn.addEventListener("click", function () {
+  const name = visitorName.value.trim();
+
+  if (name === "") {
+    greetingMessage.innerHTML = `
+            <p class="text-danger">
+                Please enter your name.
+            </p>
+        `;
+
+    return;
+  }
+
+  const greetingText = `🌼 Happy Onam, ${name}! 🌼
+
+  May this Onam bring joy, prosperity, peace and happiness
+  to you and your family.`;
+
+  greetingMessage.innerHTML = `
+    <h4>
+        🌼 Happy Onam, ${name}! 🌼
+    </h4>
+
+    <p>
+        May this Onam bring joy, prosperity,
+        peace and happiness to you and your family.
+    </p>
+
+    <button id="copyGreetingBtn" class="btn btn-outline-success btn-sm mt-2">
+        📋 Copy Greeting
+    </button>
+    <button id="shareGreetingBtn" class="btn btn-success btn-sm mt-2">
+        📤 Share Greeting
+    </button>`;
+
+  const copyGreetingBtn = document.getElementById("copyGreetingBtn");
+  const shareGreetingBtn = document.getElementById("shareGreetingBtn");
+
+  // Copy Button
+  copyGreetingBtn.addEventListener("click", async function () {
+    try {
+      await navigator.clipboard.writeText(greetingText);
+
+      copyGreetingBtn.textContent = "✅ Copied!";
+
+      setTimeout(function () {
+        copyGreetingBtn.textContent = "📋 Copy Greeting";
+      }, 2000);
+    } catch (error) {
+      copyGreetingBtn.textContent = "Unable to copy";
+    }
+  });
+
+  //Share Button
+  shareGreetingBtn.addEventListener("click", async function () {
+    if (!navigator.share) {
+      alert("Sharing is not supported on this browser.");
+
+      return;
+    }
+
+    try {
+      await navigator.share({
+        title: "Onam Greeting",
+        text: greetingText,
+      });
+    } catch (error) {
+      console.log("Sharing cancelled.");
+    }
+  });
 });
