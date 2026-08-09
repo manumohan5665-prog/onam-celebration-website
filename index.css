@@ -110,6 +110,32 @@ a {
 }
 
 
+/* Hero Countdown */
+
+/* =========================
+   Countdown
+========================= */
+
+.countdown-box {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    padding: 15px 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.countdown-box span {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #198754;
+}
+
+.countdown-box small {
+    color: #666;
+    font-weight: 600;
+}
+
+
 /* About Section */
 
 #about {
